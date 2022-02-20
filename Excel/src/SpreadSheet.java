@@ -105,8 +105,7 @@ public class SpreadSheet {
     }
     
     private boolean isEmpty(int row, String column) {
-        
-        
+        return true;
     }
 
 }
