@@ -41,6 +41,20 @@ public class UGraph {
         boolean[] visited = new boolean[graph.total_vertices + 1];
         System.out.println("DFS: ");
         graph.dfs(1, visited);
+        System.out.println();
+        
+        System.out.println("Check even: " + graph.allEven());
+        
+        UGraph graph2 = new UGraph(3);
+        graph2.addEdge(1, 2);
+        graph2.addEdge(1, 3);
+        graph2.addEdge(2, 3);
+        graph2.printGraph();
+        System.out.println("All vertex has even degree: " + graph2.allEven());
+        System.out.println("Removed edge between node 1 and node 2");
+        graph2.removeEdge(1, 2);
+        graph2.printGraph();
+        System.out.println("All vertex has even degree: " + graph2.allEven());
     }
 
     private void addEdge(int i, int j) {
@@ -67,6 +81,18 @@ public class UGraph {
     }
 
     private boolean allEven() {
+        for (int i = 1; i <= total_vertices; i++) {
+            int count = 0;
+            for (int j = 1; j <= total_vertices; j++) {
+                if (arr.get(i).get(j) == 1) {
+                    count++;
+                }
+            }
+
+            if (count % 2 != 0) {
+                return false;
+            }
+        }
         return true;
     }
 
