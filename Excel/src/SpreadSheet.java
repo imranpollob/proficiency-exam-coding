@@ -43,7 +43,7 @@ class IntCell implements Cell {
     @Override
     public void setValue(String val) {
         try {
-            value = Integer.valueOf(value);
+            value = Integer.valueOf(val);
         } catch (Exception e) {
             System.out.println(e.toString());
         }
@@ -86,26 +86,94 @@ class FloatCell implements Cell {
 }
 
 public class SpreadSheet {
-    static int colsCount;
-    static int rowsCount;
+    int cols;
+    int rows;
     ArrayList<LinkedList<Cell>> arr;
 
+    enum var_type {
+        INT, FLOAT, STR
+    }
+
     public SpreadSheet(int col, int row) {
-        colsCount = col;
-        rowsCount = row;
+        cols = col;
+        rows = row;
+        arr = new ArrayList<LinkedList<Cell>>();
+
+        for (int i = 0; i < rows; i++) {
+            arr.add(new LinkedList<Cell>());
+
+            for (int j = 0; j < cols; j++) {
+                Cell cell = new StrCell();
+                cell.setValue("7");
+
+                arr.get(i).add(null);
+            }
+        }
     }
 
     public static void main(String[] args) {
         SpreadSheet excel = new SpreadSheet(5, 5);
-        
-//        for (int i = 0; i <= colsCount; i++) {
-//            arr.add();
-//        }
-        
+        LinkedList<Integer> linkedList = new LinkedList<Integer>();
+//        linkedList.
+//        System.out.println(excel.arr);
+
+        System.out.println(excel.isEmpty(0, "A"));
+        excel.setCellValue(0, "A", "123", var_type.INT);
+        System.out.println(excel.getFloatValue(0, "A"));
+        System.out.println(excel.isEmpty(0, "A"));
     }
-    
-    private boolean isEmpty(int row, String column) {
+
+    private boolean setCellValue(int row, String column, String value, var_type valueType) {
+        int col = convertColNameToNumber(column);
+
+        try {
+            arr.get(row).get(col);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            return false;
+        }
+
+        if (valueType == var_type.INT) {
+            Cell cell = new IntCell();
+            cell.setValue(value);
+            arr.get(row).add(col, cell);
+        } else if (valueType == var_type.FLOAT) {
+            Cell cell = new FloatCell();
+            cell.setValue(value);
+            arr.get(row).add(col, cell);
+        } else if (valueType == var_type.STR) {
+            Cell cell = new StrCell();
+            cell.setValue(value);
+            arr.get(row).add(col, cell);
+        }
+
         return true;
+    }
+
+    private float getFloatValue(int row, String column) {
+        int col = convertColNameToNumber(column);
+        return arr.get(row).get(col).getFloatValue();
+    }
+
+    private boolean isEmpty(int row, String column) {
+        int col = convertColNameToNumber(column);
+
+        if (arr.get(row).get(col) == null) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private static int convertColNameToNumber(String str) {
+        int col = 0;
+
+        for (int i = 0; i < str.length(); i++) {
+            col *= 26;
+            col += str.charAt(i) - 'A' + 1;
+        }
+
+        return col - 1;
     }
 
 }
