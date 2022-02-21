@@ -100,9 +100,6 @@ public class SpreadSheet {
             arr.add(new LinkedList<Cell>());
 
             for (int j = 0; j < cols; j++) {
-                Cell cell = new StrCell();
-                cell.setValue("7");
-
                 arr.get(i).add(null);
             }
         }
@@ -110,27 +107,6 @@ public class SpreadSheet {
 
     public static void main(String[] args) {
         try {
-
-//            SpreadSheet excel = new SpreadSheet(5, 5);
-//
-//            System.out.println(excel.isEmpty(0, "A"));
-//
-//            excel.setCellValue(0, "A", "123", var_type.INT);
-//
-//            System.out.println(excel.getFloatValue(0, "A"));
-//
-//            System.out.println(excel.isEmpty(0, "A"));
-//
-//            excel.setCellValue(2, "C", "333", var_type.INT);
-//
-//            System.out.println(excel.getRange(0, "A", 4, "C"));
-//
-////            System.out.println(excel.arr);
-//            System.out.println(excel.getFloatValue(2, "C"));
-//            excel.insertColumn("B");
-////            System.out.println(excel.arr);
-//            System.out.println(excel.getFloatValue(2, "D"));
-
             // Creates a 10 by 10 cell spreadsheet
             SpreadSheet excel = new SpreadSheet(10, 10);
 
@@ -149,9 +125,12 @@ public class SpreadSheet {
             // cell (2,B) to “6” and type INT
             excel.setCellValue(2, "B", "6", var_type.INT);
 
+            System.out.println(excel.isEmpty(2, "B"));
             // Inserts a new column with index “B” into the spreadsheet
             excel.insertColumn("B");
+            System.out.println(excel.isEmpty(2, "B"));
             System.out.println(excel.getFloatValue(2, "C"));
+            
             // Obtains an array of values for the cells in the range from (1,A) to (2,C) and
             // prints the contents of this array (this should print “1.0 3.0 4.0 6.0”)
             System.out.println(excel.getRange(1, "A", 2, "C"));
